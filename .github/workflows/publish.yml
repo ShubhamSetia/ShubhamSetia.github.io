@@ -1,0 +1,57 @@
+# .github/workflows/publish.yml
+name: publish
+
+on:
+  push:
+    branches:
+    - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # checks out a copy of the repository on the runners machine
+      - name: Checkout repository
+        uses: actions/checkout@master
+    # Install Java
+      - name: Prepare Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+    # Setup leiningen
+      - name: Setup Leiningen
+        uses: DeLaGuardo/setup-clojure@master
+        with:
+          lein: 2.9.1
+    # Setup NPM
+      - name: Setup NPM
+        run: sudo apt install nodejs -y & nodejs -v & sudo apt install npm & npm -v
+    # Setup Sass
+      - name: Setup Sass
+        run: sudo npm install sass -g
+    # cache Clojure(java) dependencies
+      - name: Cache Java modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-java-modules
+        with:
+          # npm cache files are stored in `~/.m2` on Linux/macOS
+          path: ~/.m2
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+    # Fetch Lein Deps
+      - name: Fetch deps
+        run: lein deps
+    # Build the blog    
+      - name: Build Blog
+        run: lein run
+    # Deploy to GH-pages
+      - name: Deploy Blog
+        uses: peaceiris/actions-gh-pages@v3
+        with: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public/
