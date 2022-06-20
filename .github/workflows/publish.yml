@@ -51,7 +51,13 @@ jobs:
         run: lein run
     # Deploy to GH-pages
       - name: Deploy Blog
-        uses: peaceiris/actions-gh-pages@v3
-        with: 
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public/
+        # uses: peaceiris/actions-gh-pages@v3
+        # with: 
+        #   github_token: ${{ secrets.GITHUB_TOKEN }}
+        #   publish_dir: ./public/
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          commit-message: ${{ github.event.head_commit.message }}
+          branch: gh-pages                                
+          single-commit: yes
+          folder: public/
