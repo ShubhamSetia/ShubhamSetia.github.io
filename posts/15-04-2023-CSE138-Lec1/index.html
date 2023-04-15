@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Shubham&#39;s Blog page: CSE 138 Lec1: What is distributed system?</title>
+        
+<meta name="keywords" content="distributed-systems,CSE138">
+
+<meta name="description" content="Notes on lecture 1 of CSE138 by Lindsey Kuper">
+
+<meta property="og:description" content="Notes on lecture 1 of CSE138 by Lindsey Kuper">
+
+<meta property="og:url" content="/posts/15-04-2023-CSE138-Lec1/" />
+<meta property="og:title" content="CSE 138 Lec1: What is distributed system?" />
+<meta property="og:type" content="article" />
+
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Oxygen:300,400,700|Inconsolata" rel="stylesheet">
+        <link href="/css/normalize.css" rel="stylesheet" type="text/css" />
+        <link href="/css/blog.css" rel="stylesheet" type="text/css" />
+        <link href="/css/lotus-highlightjs.min.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <aside id="sidebar">
+            <div id="logo">
+                <a title="Shubham&#39;s Blog page" href="/">
+                    <img class="icon" src="/img/white-lotus.svg">
+                    <div class="text desktop-and-tablet-only">Shubham&#39;s Blog page</div>
+                    <div class="text mobile-only">Shubham&#39;s Blog page</div>
+                </a>
+            </div>
+
+            <nav id="sidebar-links">
+                <nav id="menucont">
+                    <input type="checkbox" id="menu-checkbox" class="menu-checkbox">
+                    <label for="menu-checkbox" class="menutitle">
+                        <svg class="icon icon-menu" aria-hidden="true"><use xlink:href="/img/icons.svg#icon-menu"></use></svg><span class="menu-text">Menu</span>
+                    </label>
+                    <ul class="menu">
+                        <li ><a title="Home" href="/"><div class="menu-item-text">Home</div></a></li>
+                        <li ><a title="Archives" href="/archives/"><div class="menu-item-text">Archives</div></a></li>
+                        
+                        <li ><a title="Tags" href="/tags/"><div class="menu-item-text">Tags</div></a></li>
+                        
+                        
+                        <li >
+                            <a href="/pages/about/"><div class="menu-item-text">About</div></a>
+                        </li>
+                        
+                        <!-- <li><a title="RSS" href="/feed.xml"><div class="menu-item-text">RSS</div></a></li> -->
+                    </ul>
+                </nav>
+
+                <nav id="socialmedia">
+                    <ul>
+                        <li><a title="LinkedIn" href="https://www.linkedin.com/in/shubham-setia-b69a3a110/" rel="external"><svg class="icon icon-linkedin"><use xlink:href="/img/icons.svg#icon-linkedin"></use></svg></a></li>
+                        <li><a title="GitHub" href="https://github.com/ShubhamSetia" rel="external"><svg class="icon icon-github-circled"><use xlink:href="/img/icons.svg#icon-github-circled"></use></svg></a></li>
+                        <li><a title="RSS Feed" href="/feed.xml"><svg class="icon icon-rss-squared"><use xlink:href="/img/icons.svg#icon-rss-squared"></use></svg></a></li>
+                    </ul>
+                </nav>
+            </nav>
+        </aside>
+
+        <article id="main">
+            
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta">
+        <h1>CSE 138 Lec1: What is distributed system?</h1>
+        <div class="byline">
+            <span class="date">April 15, 2023</span>
+            
+            <span class="author">By: Shubham Setia</span>
+            
+        </div>
+    </div>
+</div>
+<div>
+    <ul class="toc"><li><a href="#introduction">Introduction</a></li><li><a href="#failures">Failures</a></li><li><a href="#timeouts">Timeouts</a></li><li><a href="#why-do-we-need-distributed-systems">Why do we need distributed systems?</a></li></ul>
+    <h2 id="introduction">Introduction</h2><blockquote><p>What is distributed system?</p></blockquote><p>According to Martin Kleppman a distributed system is a system running on sevral nodes connected via network characterized by partial failure.</p><p>Partial Failure:- Some parts maybe broken but others might be functional.</p><p>We want distributed systems to be fault tolerant, taking advantages of resource parallelisation. But a lot of distributed systems are not fault tolerant. We will learn to design algorithm defensively to guard against these failures.</p><h2 id="failures">Failures</h2><p>There are two major philosopies for deailing with failures</p><blockquote><p>High Performance Computing (HPC) philosophy</p></blockquote><ul><li>Treat partial failure as total failure</li><li>They checkpoint the result and whenver system is crashed, they start from the last saved checkpoint</li></ul><blockquote><p>Cloud Computing philosophy</p></blockquote><ul><li>Treat partial failure as expected and design systems to work around it.</li><li>"Everything fails all the time" - Wemer Vogels</li></ul><blockquote><pre><code>             x?
+        -----------------&gt;
+  M1                          M2
+        &lt;----------------- 
+              5
+</code></pre></blockquote><p>Potential Failures when M1 is communicating with M2:</p><ol><li>Request from M1 gets lost</li><li>Request from M1 is slow</li><li>M2 crashes</li><li>M2 is slow to respond</li><li>Response from M2 is slow</li><li>Response from M2 is lost</li><li>Corrupt transimission, example:- Byzantine Faults</li></ol><p>Important thing to note here is that, if you send request to a node and doesn't receive a response, it's impossible to know why the request failed.</p><blockquote><p>How do real system cope with this problem?</p></blockquote><h1 id="timeouts">Timeouts</h1><p>After sending the request, wait for a certain amount of time and then assume failure and try again. However this is an imperfect solution.
+For example, consider if M1 sends a request to M2 to increment x:</p><blockquote><pre><code>             x++
+        -----------------&gt;
+  M1                          M2(x=5)
+                              x++
+        &lt;-----------------    x=6
+             x=6
+</code></pre></blockquote><ul><li>If timeout is less than amount of time it takes in general, we don't know if increment happened or not.
+<ul><li>Side effects with timeout can create probelms</li><li>Uncertainity is the fundamental characterisitc of distributed systems, we should avoid side effects as much as possible.</li></ul></li><li>Long timeouts can result in increased overhead because we are throttling the amount of work that can be done.</li><li>For short timeouts, we will be making lot more calls for same operation.</li></ul><p>If we knew the max delay <code>d</code> and processing time <code>r</code>, we could set the timeout to <code>2d + r</code> and rule out a lot of uncertainty. However, you can’t get an accurate value for <code>d</code> and <code>r</code> in real life usually. Therefore, distributed systems have to account for both partial failure and unbounded latency (Palvaro's definition of distributed system).</p><h1 id="why-do-we-need-distributed-systems">Why do we need distributed systems?</h1><ul><li>we want to make things faster example: Map reduce</li><li>more data than what can be fit in one machine.</li><li>reliability (more copies of same data)</li><li>throughput (data is physically closer)</li></ul><p>Watch <a href="https://www.youtube.com/watch?v=rZPRjLMWOao">Lecture</a> here.</p>
+</div>
+
+<div id="post-tags">
+    <br/>
+    <b>Tags: </b>
+    
+    <a href="/tags/distributed-systems/">distributed-systems</a>
+    
+    <a href="/tags/CSE138/">CSE138</a>
+    
+</div>
+
+<br/>
+
+
+    
+    <div id="prev-next">
+    
+    <div class="prev"></div>
+    
+    
+    <div class="next"></div>
+    
+</div>
+
+    
+
+    
+
+
+</div>
+
+            <hr/>
+            <div id="footercont">
+                Copyright &copy; 2023 Shubham Setia
+                <br>Powered by <a href="http://cryogenweb.org">Cryogen</a>
+                <br>Theme by <a href="http://github.com/KingMob">KingMob</a>
+            </div>
+        </article>
+
+        <script src="/js/highlight.pack.js" type="application/javascript"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+        
+        
+    </body>
+</html>
