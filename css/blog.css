@@ -165,7 +165,7 @@ hr {
 }
 
 blockquote {
-  background: #eeeeee;
+  background: rgb(238.25, 238.25, 238.25);
   margin: 1em 0; /* (20px / 20px) */
   color: #555;
   border-left: 5px solid #522158;
@@ -192,7 +192,7 @@ blockquote .author {
 }
 
 code {
-  background-color: #eeeeee;
+  background-color: rgb(238.25, 238.25, 238.25);
   border-radius: 2px;
   padding: 1px 3px;
 }
@@ -442,12 +442,12 @@ body {
 }
 
 a {
-  color: #a131ae;
+  color: rgb(160.6337190083, 48.6545454545, 174.3454545455);
   text-decoration: none;
   text-decoration: underline solid currentColor;
 }
 a:hover {
-  color: #cb6ed7;
+  color: rgb(203.2611570248, 110.3636363636, 214.6363636364);
 }
 
 @media screen and (min-width: 700px) {
