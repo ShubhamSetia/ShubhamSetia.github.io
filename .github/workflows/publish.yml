@@ -13,32 +13,35 @@ jobs:
     steps:
     # checks out a copy of the repository on the runners machine
       - name: Checkout repository
-        uses: actions/checkout@master
+        uses: actions/checkout@v4
     # Install Java
       - name: Prepare Java
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v5
         with:
-          java-version: 1.8
+          java-version: 17
+          distribution: temurin
     # Setup leiningen
       - name: Setup Leiningen
-        uses: DeLaGuardo/setup-clojure@master
+        uses: DeLaGuardo/setup-clojure@13.4
         with:
-          lein: 2.9.1
+          lein: 2.10.0
     # Setup NPM
       - name: Setup NPM
-        run: sudo apt install nodejs -y & nodejs -v & sudo apt install npm & npm -v
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
     # Setup Sass
       - name: Setup Sass
-        run: sudo npm install sass -g
+        run: npm install -g sass
     # cache Clojure(java) dependencies
       - name: Cache Java modules
         uses: actions/cache@v4
         env:
           cache-name: cache-java-modules
         with:
-          # npm cache files are stored in `~/.m2` on Linux/macOS
+          # Maven cache files are stored in `~/.m2` on Linux/macOS
           path: ~/.m2
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/deps.edn', '**/project.clj') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
@@ -55,7 +58,7 @@ jobs:
         # with: 
         #   github_token: ${{ secrets.GITHUB_TOKEN }}
         #   publish_dir: ./public/
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           commit-message: ${{ github.event.head_commit.message }}
           branch: gh-pages                                
