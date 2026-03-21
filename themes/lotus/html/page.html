@@ -11,16 +11,27 @@
 <meta property="og:type" content="article" />
 {% endblock %}
 {% block content %}
-<div id="custom-page">
-    <div id="page-header">
+<section class="page-panel article-shell">
+    <header class="page-header">
+        <p class="eyebrow">Page</p>
         <h1>{{page.title}}</h1>
+        {% if page.description %}
+        <p class="lede">{{page.description}}</p>
+        {% endif %}
+    </header>
+    <div class="post-body">
+        {% if page.toc %}
+        <div class="table-of-contents">
+            <p class="table-of-contents__title">On this page</p>
+            {{page.toc|safe}}
+        </div>
+        {% endif %}
+        {{page.content|safe}}
     </div>
-    {% if page.toc %}{{page.toc|safe}}{% endif %}
-    {{page.content|safe}}
 
     {% with prev=page.prev next=page.next%}
     {% include "/html/prev-next.html" %}
     {% endwith %}
 
-</div>
+</section>
 {% endblock %}

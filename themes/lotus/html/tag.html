@@ -1,16 +1,24 @@
 {% extends "/html/base.html" %}
 {%block subtitle %}: Posts Tagged &quot;{{name}}&quot;{% endblock %}
 {% block content %}
-<div id="posts-by-tag">
-    <div id="page-header">
-        <h1>Posts Tagged &quot;{{name}}&quot;</h1>
-    </div>
-    <ul>
+<section class="page-panel">
+    <header class="page-header">
+        <p class="eyebrow">Topic</p>
+        <h1>{{name}}</h1>
+        <p class="lede">Posts filed under this topic.</p>
+    </header>
+    <ul class="post-list">
     {% for post in posts %}
-        <li>
-            <a href="{{post.uri}}">{{post.title}}</a>
+        <li class="post-list__item">
+            <div>
+                <a class="post-list__title" href="{{post.uri}}">{{post.title}}</a>
+                {% if post.description %}
+                <p class="post-list__summary">{{post.description}}</p>
+                {% endif %}
+            </div>
+            <span class="post-list__date">{{post.date|date:"MMM dd, yyyy"}}</span>
         </li>
     {% endfor %}
     </ul>
-</div>
+</section>
 {% endblock %}

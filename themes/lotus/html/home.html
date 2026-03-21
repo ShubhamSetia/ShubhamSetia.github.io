@@ -1,6 +1,6 @@
 {% extends "/html/base.html" %}
 {% block content %}
-<div id="post">
+<section class="page-panel article-shell">
     {% include "/html/post-content.html" %}
     {% if disqus? %}
     <div id="comments">
@@ -12,5 +12,5 @@
     {% include "/html/prev-next.html" %}
     {% endwith %}
 
-</div>
+</section>
 {% endblock %}

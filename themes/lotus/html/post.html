@@ -12,7 +12,7 @@
 <meta property="og:type" content="article" />
 {% endblock %}
 {% block content %}
-<div id="post">
+<section class="page-panel article-shell">
     {% include "/html/post-content.html" %}
 
     {% with prev=post.prev next=post.next%}
@@ -35,5 +35,5 @@
     {% endif %}
 
 
-</div>
+</section>
 {% endblock %}
