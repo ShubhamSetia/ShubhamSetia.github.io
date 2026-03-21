@@ -13,7 +13,7 @@ jobs:
     steps:
     # checks out a copy of the repository on the runners machine
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
     # Install Java
       - name: Prepare Java
         uses: actions/setup-java@v5
@@ -22,12 +22,12 @@ jobs:
           distribution: temurin
     # Setup leiningen
       - name: Setup Leiningen
-        uses: DeLaGuardo/setup-clojure@13.4
+        uses: DeLaGuardo/setup-clojure@13.5.3
         with:
           lein: 2.10.0
     # cache Clojure(java) dependencies
       - name: Cache Java modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         env:
           cache-name: cache-java-modules
         with:
