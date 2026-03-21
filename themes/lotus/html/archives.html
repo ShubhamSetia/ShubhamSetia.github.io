@@ -1,20 +1,31 @@
 {% extends "/html/base.html" %}
 {%block subtitle %}: Archives{% endblock %}
 {% block content %}
-<div id="posts">
-    <div id="page-header">
-        <h1>Archives</h1>
-    </div>
+<section class="page-panel">
+    <header class="page-header">
+        <p class="eyebrow">Archive</p>
+        <h1>All writing</h1>
+        <p class="lede">Posts organized by month for quick scanning and easy reference.</p>
+    </header>
+    <div class="archive-list">
     {% for group in groups %}
-        <h4>{{group.group}}</h4>
-        <ul>
+        <section class="archive-group">
+        <h2>{{group.group}}</h2>
+        <ul class="post-list">
         {% for post in group.posts %}
-        <li>
-            {{post.date|date:"MMM dd"}} - <a href="{{post.uri}}">{{post.title}}</a>
+        <li class="post-list__item">
+            <div>
+                <a class="post-list__title" href="{{post.uri}}">{{post.title}}</a>
+                {% if post.description %}
+                <p class="post-list__summary">{{post.description}}</p>
+                {% endif %}
+            </div>
+            <span class="post-list__date">{{post.date|date:"MMM dd"}}</span>
         </li>
         {% endfor %}
         </ul>
+        </section>
     {% endfor %}
-
-</div>
+    </div>
+</section>
 {% endblock %}

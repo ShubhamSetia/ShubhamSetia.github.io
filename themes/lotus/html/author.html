@@ -1,19 +1,28 @@
 {% extends "/html/base.html" %}
 {%block subtitle %}: Posts by {{author}} {% endblock %}
 {% block content %}
-<div id="posts">
-    <div id="page-header" class="post-header">
+<section class="page-panel">
+    <header class="page-header">
+        <p class="eyebrow">Author</p>
         <h1>Posts by {{author}}</h1>
-    </div>
+    </header>
     {% for group in groups %}
-    <h4>{{group.group}}</h4>
-    <ul>
+    <section class="archive-group">
+    <h2>{{group.group}}</h2>
+    <ul class="post-list">
         {% for post in group.posts %}
-        <li>
-            {{post.date|date:"MMM dd"}} - <a href="{{post.uri}}">{{post.title}}</a>
+        <li class="post-list__item">
+            <div>
+                <a class="post-list__title" href="{{post.uri}}">{{post.title}}</a>
+                {% if post.description %}
+                <p class="post-list__summary">{{post.description}}</p>
+                {% endif %}
+            </div>
+            <span class="post-list__date">{{post.date|date:"MMM dd"}}</span>
         </li>
         {% endfor %}
     </ul>
+    </section>
     {% endfor %}
-</div>
+</section>
 {% endblock %}
