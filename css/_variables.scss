@@ -1,53 +1,49 @@
 // Colors
 
 $black: #000;
-$red: #A71E2E;
-$green: #00D400;
+$red: #a71e2e;
+$green: #00d400;
 $purple: #522158;
-$very-dark-grey: #111;
-$dark-grey: #444;
-$grey: #808080;
-$light-grey: #ccc;
-$very-light-grey: #fbfbfb;
+$very-dark-grey: #111827;
+$dark-grey: #334155;
+$grey: #64748b;
+$light-grey: #cbd5e1;
+$very-light-grey: #f8fafc;
 $white: #fff;
 
-$base-color: $purple;
-$base-font-color: $very-dark-grey;
-$body-bgcolor: $very-light-grey;
+$base-color: #7c4f2b;
+$base-font-color: #161616;
+$body-bgcolor: #fcfbf8;
 
 // Fonts
 $font-weight-light: 300;
 $font-weight-normal: 400;
-$font-weight-heavy: 600;
+$font-weight-heavy: 700;
 $font-weight-header: 700;
 $default-font-weight: $font-weight-normal;
 
 $default-font-size: 16px;
-$default-line-height: 1.25;
+$default-line-height: 1.65;
 $button-font-size: 14px;
 
-
-
-$default-font-family: Oxygen, Tahoma, Verdana, Helvetica, Arial, sans-serif;
-$wide-font-family: Montserrat, sans-serif;
-$mono-font-family: Inconsolata, Consolas, "Deja Vu Sans Mono", "Bitstream Vera Sans Mono", "Droid Sans Mono", "Andale Mono", Anonymous, "Monaco", monospaced;
+$default-font-family: "Manrope", "Segoe UI", sans-serif;
+$wide-font-family: "Manrope", "Segoe UI", sans-serif;
+$mono-font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
 // Borders
-$default-border-color: $base-color;
-$default-border-width: 2px;
+$default-border-color: #e7e0d7;
+$default-border-width: 1px;
 $default-border-style: solid;
 $default-border: $default-border-width $default-border-style $default-border-color;
-$default-border-radius: 2px;
+$default-border-radius: 12px;
 
 // Spacing
-$default-gutter: 20px;
+$default-gutter: 24px;
 $sidebar-width: 220px;
 
 // Media
-// $tablet-breakpoint: 768px;
-// $mobile-breakpoint: 480px;
-$tablet-breakpoint: 900px;
-$mobile-breakpoint: 700px;
+$tablet-breakpoint: 960px;
+$mobile-breakpoint: 720px;
 
 // Effects
 $default-opacity: 0.85;

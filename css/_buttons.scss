@@ -1,28 +1,28 @@
 @import "variables";
 
 .button {
-  background: none;
-  border: $default-border;
-  position: relative;
-  display: inline-block;
-  padding: 7px 12px;
-  margin: 0;
-  width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-primary, $base-color);
+  background: transparent;
+  color: var(--color-primary, $base-color);
   font-family: $wide-font-family;
   font-size: $button-font-size;
-  text-transform: uppercase;
-
-  cursor: pointer;
-  text-align: left;
+  font-weight: 600;
   text-decoration: none;
-  letter-spacing: 2px;
+  letter-spacing: 0.02em;
 
   &:hover {
-    background: $default-border-color;
-    color: $white;
+    color: var(--color-primary-dark, $base-font-color);
+    border-color: var(--color-primary-dark, $base-font-color);
   }
+}
 
-  &:active {
-    top: 1px;
-  }
+.button.button-secondary {
+  border-color: var(--color-border, $light-grey);
+  color: var(--color-text-light, $grey);
 }
